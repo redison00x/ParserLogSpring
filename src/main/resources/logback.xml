@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug ="true">
+    <!-- Appender для вывода в консоль -->
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Логгер для LogParserService с уровнем DEBUG -->
+    <logger name="org.example.SberDocParser.service.LogParserService" level="DEBUG"/>
+
+    <!-- Корневой логгер с уровнем INFO (для всех остальных классов) -->
+    <root level="INFO">
+        <appender-ref ref="Console"/>
+    </root>
+</configuration>
