@@ -28,8 +28,9 @@ public class LogParserService {
         try(BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             Pattern logPattern = Pattern.compile("(\\d{2}\\.\\d{2} \\d{2}:\\d{2}:\\d{3}) SBKRNL: Command = (\\d+), Amount = (\\d+\\.\\d+)");
-            Pattern resultPattern = Pattern.compile("Result = 0, Amount = (\\d+\\.\\d+), Card = '\\*\\*\\*\\*\\*\\*\\*\\*\\*(\\d{4})'");
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM HH:mm:ss");
+
+            Pattern resultPattern = Pattern.compile("(\\d{2}\\.\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3}) SBKRNL: Result  = (\\d+), GUID=[^,]+, Amount = (\\d+\\.\\d+)(?:, Card = '' and '([\\*]+(\\d{4}))')?");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM HH:mm:ss.SSS");
 
             while((line = br.readLine())!= null){
                 Matcher matcher = logPattern.matcher(line);

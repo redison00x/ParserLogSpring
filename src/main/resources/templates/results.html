@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Log Parser Results</title>
+</head>
+<body>
+<h1>Log Parser Results</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Время</th>
+        <th>Команда</th>
+        <th>Сумма</th>
+        <th>Статус оплаты</th>
+        <th>Карта транзакции</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="logEntry : ${logEntries}">
+        <td th:text="${logEntry.dateTime}"></td>
+        <td th:text="${logEntry.command}"></td>
+        <td th:text="${logEntry.amount}"></td>
+        <td th:text="${logEntry.paymentStatus}"></td>
+        <td th:text="${logEntry.cardEnding}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/parse">Загрузить другой файл</a>
+</body>
+</html>

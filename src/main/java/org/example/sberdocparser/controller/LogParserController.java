@@ -2,7 +2,6 @@ package org.example.sberdocparser.controller;
 
 import org.example.sberdocparser.model.LogEntry;
 import org.example.sberdocparser.service.LogParserService;
-import org.example.sberdocparser.service.LogWriterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +24,6 @@ public class LogParserController {
     @Autowired
     private LogParserService logParserService;
 
-    @Autowired
-    private LogWriterService logWriterService;
-
-
     @GetMapping("/parse")
     public String showUploadForm() {
         return "upload";
@@ -49,15 +44,12 @@ public class LogParserController {
             file.transferTo(tempFile);
             logger.info("Размер временного файла: " + tempFile.length() + " байт");
 
-            String outputFilePath = "output.txt";
             List<LogEntry> logEntries = logParserService.parseLogFile(tempFile.getAbsolutePath());
             logger.info("Найдено log entries: " + logEntries.size());
 
-            logWriterService.writeLogToFile(logEntries, outputFilePath);
-            logger.info("Файл записан: " + outputFilePath);
+            model.addAttribute("logEntries", logEntries);
 
-            model.addAttribute("message", "Файл распарсен в output.txt");
-            return "status";
+            return "results";
 
         } catch (IOException e) {
             logger.error("Ошибка парсинга файла: " + e.getMessage(), e);
